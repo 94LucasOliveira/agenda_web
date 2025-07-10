@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <style>
+        #form-cadastro {
+            display: flex;
+            flex-direction: column;
+
+        }
+    </style>
+</head>
+<body>
+    <h1>Agenda Web</h1>
+<div id="Form-cadastro">
+    <form method="POST" action="/cadastrar">
+        Email: <input type="email" name="emial">
+        nome: <input type="text" value="nome">
+        Fone: <input type="text" name="fone">
+
+     <input type="submit" value="Cadastrar">   
+    </form>
+</div>
+
+{% for item in listagem %}
+<li>
+    <a href="/remover/{{item[0]}}">X</a>
+    <ul>
+        <li>{{item[1]}}</li>
+        <li>{{item[2]}}</li>
+    </ul>
+</li>
+{% endfor %}
+    
+</body>
+</html>
