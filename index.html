@@ -3,52 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        main {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-}
-    </style>
+    <title>Agenda Web</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
 </head>
 <body>
 <header>
-    Agenda Web
+    <h1>Agenda Web</h1>
 </header>
 
 <main>
     <section>
         <form method="POST" action="/cadastrar">
-            Email: <input type="email" name="emial">
-            nome: <input type="text" value="nome">
-            Fone: <input type="text" name="fone">
-         <input type="submit" value="Cadastrar">   
+            <label for="emial">Email: </label>
+            <input type="emial" name="email" id="email" placeholder="exemplo@dominio.com" required>
+
+            <label for="nome">Nome: </label>
+            <input type="text" name="nome" id="nome" placeholder="Nome completo" required>
+
+            <label for="fone">Fone: </label>
+            <input type="text" name="fone" id="fone" placeholder="(xx) xxxx-xxxx" required> 
+
+            <input type="submit" value="Cadastrar">
         </form>
     </section>
 
     <section>
+        <h2>Contatos Salvos</h2>
         <table>
-            <!--Table Header-->
-            <th></th>
-            <th>email</th>
-            <th>nome</th>
-            <th>fone</th>
-            {% for email, registro in agenda.items() %}
-            <!--Table Row-->
+        <thead>
             <tr>
-                <!--4 colunas (Table Data)-->
-                <td><a href="/remover/{{item[0]}}">X</a></td>
-                <td>{{email}}</td>
-                <td>{{registro["nome"]}}</td>
-                <td>{{registro["fone"]}}</td>
+            <!--Table Header-->
+                <th>Ação</th>
+                <th>Email</th>
+                <th>Nome</th>
+                <th>Fone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop para exibir cada registro da agenda -->
+            {% for email, registro in agenda.items() %}
+            <tr>
+                <td>
+                    <form action="POST" action="/remover">
+                <!-- Campo oculto que envia o email a ser removido -->
+                <input type="hidden" name="email" value="{{ email }}">
+                <button type="submit" class="remove-button">Remover</button>
+                    </form>
+                </td>
+                <td>{{ email }}</td>
+                <td>{{ registro["nome"] }}</td>
+                <td>{{ registro["fone"] }}</td>
             </tr>
             {% endfor %}
+        </tbody>
         </table>
     </section>
+    </main>
 
     <section>
     </section>
 </main>
-<footer>copyleft (c) </footer>
+<footer> <!--Usado para definir o rodapé de um documento/seção específica-->
+    <a>&copy; copyleft</p>
+</footer>
 </body>
 </html>

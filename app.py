@@ -1,12 +1,13 @@
 import flask as fk
 import agenda
 
+# Inicializador da aplicação Flask
 app = fk.Flask(__name__)
 
 @app.get("/")
 def get_home():
-   # listagem_agenda = agenda.get_listagem()
-    return fk.render_template("index.html", agenda=agenda.get_agenda)
+   # Busca a lista de contatos do módulo 'agenda' e a exibe no template 'index.html'.
+    return fk.render_template("index.html", agenda=lista_de_contatos)
 
 @app.post("/cadastrar")
 def post_cadastrar():
@@ -15,21 +16,22 @@ def post_cadastrar():
     val_nome = fk.request.form["nome"]
     val_fone = fk.request.form["fone"]
 
-    # pede à model que cadastre
-    agenda.cadastrar(val_email, {
-        "nome": val_nome
+    novo_contato = {
+        "nome": val_nome,
+        "email": val_email,
         "fone": val_fone
-    })
+    }
+
+    agenda.cadastrar(novo_contato)
+
     # pede à view que cadastre o resultado
     return fk.redirect("/")
 
-@app.route("/remover/<nome>")
-def remover(email):
-    agenda.remover(email)
+@app.post("/remover")
+def post_remover():
+    email_remover = fk.request.form["nome"]
+    agenda.remover(email_remover)
     return fk.redirect("/")
 
-@app.route("/remover")
-def post_remover():
-    nome = fk.request.form["nome"]
-    agenda.remover(nome)
-    return fk.redirect("/")
+if __name__ == "__main__":
+    app.run(debug=True)
